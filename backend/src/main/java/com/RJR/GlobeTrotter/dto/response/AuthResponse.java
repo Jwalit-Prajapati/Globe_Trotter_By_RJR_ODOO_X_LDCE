@@ -1,4 +1,4 @@
-package com.RJR.GlobeTrotter.dto.Response;
+package com.RJR.GlobeTrotter.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

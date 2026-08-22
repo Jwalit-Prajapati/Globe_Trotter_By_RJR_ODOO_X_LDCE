@@ -13,6 +13,8 @@ public interface StopActivityRepository
 
     List<StopActivity> findByStopId(Long stopId);
 
+    List<StopActivity> findByStopIdIn(List<Long> stopIds);
+
     List<StopActivity> findByStopIdOrderByDayDateAscScheduledTimeAsc(
             Long stopId
     );
