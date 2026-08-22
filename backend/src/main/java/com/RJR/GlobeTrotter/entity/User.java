@@ -1,4 +1,4 @@
-package com.RJR.GlobeTrotter.Model;
+package com.RJR.GlobeTrotter.entity;
 
 import java.time.LocalDateTime;
 
