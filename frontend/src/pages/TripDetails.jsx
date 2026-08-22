@@ -97,7 +97,7 @@ export const TripDetails = () => {
                         <h4 className="text-sm font-semibold text-muted uppercase tracking-wider">Planned Activities</h4>
                         <div className="flex flex-wrap gap-2">
                           {stop.activities && stop.activities.map(act => (
-                            <div key={act.id} className="px-3 py-1.5 bg-bg-secondary border border-border-color rounded-lg text-sm font-medium">
+                            <div key={act.id} className="px-3 py-1.5 bg-bg-secondary border border-border-color rounded-md text-sm font-medium">
                               {act.name}
                             </div>
                           ))}
