@@ -1,4 +1,4 @@
-package com.RJR.GlobeTrotter.Model;
+package com.RJR.GlobeTrotter.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
