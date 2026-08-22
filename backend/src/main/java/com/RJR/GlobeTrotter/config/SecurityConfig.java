@@ -27,7 +27,8 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 
     private static final String[] PUBLIC_ENDPOINTS = {
-            "/api/auth/**"
+            "/api/auth/**",
+            "/api/trips/public/**"
     };
 
     private final CustomUserDetailsService userDetailsService;
