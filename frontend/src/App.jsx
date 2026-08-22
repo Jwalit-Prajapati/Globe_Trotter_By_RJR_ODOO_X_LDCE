@@ -6,6 +6,7 @@ import { Signup } from './pages/Signup';
 import { Dashboard } from './pages/Dashboard';
 import { TripDetails } from './pages/TripDetails';
 import { PublicTrip } from './pages/PublicTrip';
+import { Footer } from './components/layout/Footer';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
@@ -38,6 +39,7 @@ function AppRoutes() {
         {/* Public Routes */}
         <Route path="/public/:slug" element={<PublicTrip />} />
       </Routes>
+      <Footer />
     </>
   );
 }

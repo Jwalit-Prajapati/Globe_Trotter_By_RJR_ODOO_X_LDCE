@@ -61,7 +61,7 @@ export const Dashboard = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {trips.length === 0 ? (
-            <div className="col-span-full py-12 text-center bg-bg-secondary rounded-lg border border-dashed border-border-color">
+            <div className="col-span-full py-12 text-center bg-bg-secondary rounded-xl border border-dashed border-border-color">
               <p className="text-muted text-lg mb-4">You haven't planned any trips yet.</p>
               <Button onClick={handleCreateTrip}>Start Planning</Button>
             </div>
