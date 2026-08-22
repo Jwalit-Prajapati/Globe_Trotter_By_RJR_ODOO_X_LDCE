@@ -1,0 +1,73 @@
+package com.RJR.GlobeTrotter.service;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.RJR.GlobeTrotter.dto.request.LoginRequest;
+import com.RJR.GlobeTrotter.dto.request.RegisterRequest;
+import com.RJR.GlobeTrotter.dto.response.AuthResponse;
+import com.RJR.GlobeTrotter.entity.User;
+import com.RJR.GlobeTrotter.exception.EmailAlreadyInUseException;
+import com.RJR.GlobeTrotter.exception.InvalidCredentialsException;
+import com.RJR.GlobeTrotter.repository.UserRepository;
+import com.RJR.GlobeTrotter.security.JwtService;
+
+class AuthServiceTest {
+
+    @Test
+    void registerCreatesUserAndReturnsToken() {
+        UserRepository users = mock(UserRepository.class);
+        PasswordEncoder encoder = mock(PasswordEncoder.class);
+        JwtService jwt = mock(JwtService.class);
+        AuthenticationManager authentication = mock(AuthenticationManager.class);
+        AuthService service = new AuthService(users, encoder, jwt, authentication);
+        RegisterRequest request = new RegisterRequest("Alex", "alex@example.com", "password123");
+        User saved = User.builder().id(1L).name("Alex").email("alex@example.com")
+                .passwordHash("encoded").build();
+
+        when(users.existsByEmail(request.getEmail())).thenReturn(false);
+        when(encoder.encode(request.getPassword())).thenReturn("encoded");
+        when(users.save(org.mockito.ArgumentMatchers.any(User.class))).thenReturn(saved);
+        when(jwt.generateToken(1L, "alex@example.com")).thenReturn("token");
+
+        AuthResponse response = service.register(request);
+
+        assertEquals("token", response.getToken());
+        assertEquals("Bearer", response.getTokenType());
+        assertEquals("alex@example.com", response.getUser().getEmail());
+        verify(users).save(org.mockito.ArgumentMatchers.any(User.class));
+    }
+
+    @Test
+    void registerRejectsDuplicateEmail() {
+        UserRepository users = mock(UserRepository.class);
+        AuthService service = new AuthService(users, mock(PasswordEncoder.class), mock(JwtService.class),
+                mock(AuthenticationManager.class));
+        RegisterRequest request = new RegisterRequest("Alex", "alex@example.com", "password123");
+        when(users.existsByEmail(request.getEmail())).thenReturn(true);
+
+        assertThrows(EmailAlreadyInUseException.class, () -> service.register(request));
+    }
+
+    @Test
+    void loginRejectsMissingUser() {
+        UserRepository users = mock(UserRepository.class);
+        AuthenticationManager authentication = mock(AuthenticationManager.class);
+        AuthService service = new AuthService(users, mock(PasswordEncoder.class), mock(JwtService.class), authentication);
+        LoginRequest request = new LoginRequest("missing@example.com", "password123");
+        when(users.findByEmail(request.getEmail())).thenReturn(Optional.empty());
+
+        assertThrows(InvalidCredentialsException.class, () -> service.login(request));
+
+        verify(authentication).authenticate(org.mockito.ArgumentMatchers.any());
+    }
+}
