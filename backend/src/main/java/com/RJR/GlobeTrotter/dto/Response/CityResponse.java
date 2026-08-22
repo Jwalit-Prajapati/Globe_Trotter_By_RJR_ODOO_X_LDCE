@@ -21,3 +21,4 @@ public class CityResponse {
     private Integer popularity;
     private String imageUrl;
 }
+git status
