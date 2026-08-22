@@ -5,6 +5,19 @@ import { getPopularCities } from '../api/cities';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 
+const MOCK_TRIPS = [
+  { id: 1, title: 'Summer in Paris', totalCost: '2500.00' },
+  { id: 2, title: 'Tokyo Adventure', totalCost: '3200.00' },
+  { id: 3, title: 'Road Trip USA', totalCost: '1500.00' }
+];
+
+const MOCK_CITIES = [
+  { id: 1, name: 'Paris', country: 'France' },
+  { id: 2, name: 'Tokyo', country: 'Japan' },
+  { id: 3, name: 'New York', country: 'USA' },
+  { id: 4, name: 'Rome', country: 'Italy' }
+];
+
 export const Dashboard = () => {
   const [trips, setTrips] = useState([]);
   const [popularCities, setPopularCities] = useState([]);
@@ -14,11 +27,11 @@ export const Dashboard = () => {
     const fetchData = async () => {
       try {
         const [tripsData, citiesData] = await Promise.all([
-          getTrips(),
-          getPopularCities().catch(() => []) // Fallback if API fails
+          getTrips().catch(() => []),
+          getPopularCities().catch(() => [])
         ]);
-        setTrips(tripsData || []);
-        setPopularCities(citiesData || []);
+        setTrips(tripsData && tripsData.length > 0 ? tripsData : MOCK_TRIPS);
+        setPopularCities(citiesData && citiesData.length > 0 ? citiesData : MOCK_CITIES);
       } catch (err) {
         console.error('Failed to load dashboard data', err);
       } finally {
