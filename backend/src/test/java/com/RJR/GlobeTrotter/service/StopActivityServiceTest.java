@@ -1,14 +1,5 @@
 package com.RJR.GlobeTrotter.service;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-=======
->>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -20,45 +11,10 @@ import static org.mockito.Mockito.when;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-<<<<<<< HEAD
-=======
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
->>>>>>> 7c5ebc2d69ca10790429b917c02ef1f6cbf77eb8
-=======
->>>>>>> e9080cdf5de3cc86242a07b3f4737bbde0690d1b
->>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-import com.RJR.GlobeTrotter.repository.ActivityRepository;
-import com.RJR.GlobeTrotter.repository.StopActivityRepository;
-import com.RJR.GlobeTrotter.repository.StopRepository;
-import com.RJR.GlobeTrotter.exception.ResourceNotFoundException;
-
-class StopActivityServiceTest {
-
-    @Test
-    void rejectsAddingActivityToMissingStop() {
-        StopRepository stops = mock(StopRepository.class);
-        when(stops.findById(99L)).thenReturn(Optional.empty());
-        StopActivityService service = new StopActivityService(mock(StopActivityRepository.class), stops,
-                mock(ActivityRepository.class));
-
-        com.RJR.GlobeTrotter.dto.request.StopActivityRequest request =
-                com.RJR.GlobeTrotter.dto.request.StopActivityRequest.builder()
-                        .stopId(99L).activityId(1L).dayDate(java.time.LocalDate.now())
-                        .cost(java.math.BigDecimal.ZERO).build();
-
-        assertThrows(ResourceNotFoundException.class, () -> service.addActivityToStop(1L, request));
-=======
->>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
 import com.RJR.GlobeTrotter.dto.request.StopActivityRequest;
 import com.RJR.GlobeTrotter.dto.response.StopActivityResponse;
 import com.RJR.GlobeTrotter.entity.Activity;
@@ -381,31 +337,5 @@ class StopActivityServiceTest {
         assertThrows(ResourceNotFoundException.class, () -> stopActivityService.removeActivityFromStop(1L, 40L));
 
         verify(stopActivityRepository, never()).delete(any(StopActivity.class));
-<<<<<<< HEAD
-=======
-import com.RJR.GlobeTrotter.repository.ActivityRepository;
-import com.RJR.GlobeTrotter.repository.StopActivityRepository;
-import com.RJR.GlobeTrotter.repository.StopRepository;
-import com.RJR.GlobeTrotter.exception.ResourceNotFoundException;
-
-class StopActivityServiceTest {
-
-    @Test
-    void rejectsAddingActivityToMissingStop() {
-        StopRepository stops = mock(StopRepository.class);
-        when(stops.findById(99L)).thenReturn(Optional.empty());
-        StopActivityService service = new StopActivityService(mock(StopActivityRepository.class), stops,
-                mock(ActivityRepository.class));
-
-        com.RJR.GlobeTrotter.dto.request.StopActivityRequest request =
-                com.RJR.GlobeTrotter.dto.request.StopActivityRequest.builder()
-                        .stopId(99L).activityId(1L).dayDate(java.time.LocalDate.now())
-                        .cost(java.math.BigDecimal.ZERO).build();
-
-        assertThrows(ResourceNotFoundException.class, () -> service.addActivityToStop(1L, request));
->>>>>>> 7c5ebc2d69ca10790429b917c02ef1f6cbf77eb8
-=======
->>>>>>> e9080cdf5de3cc86242a07b3f4737bbde0690d1b
->>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
     }
 }

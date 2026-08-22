@@ -1,18 +1,5 @@
 package com.RJR.GlobeTrotter.service;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.util.Optional;
-
-import org.junit.jupiter.api.Test;
-
-=======
->>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -27,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 
 import com.RJR.GlobeTrotter.dto.request.StopRequest;
 import com.RJR.GlobeTrotter.dto.response.StopResponse;
@@ -36,43 +22,10 @@ import com.RJR.GlobeTrotter.entity.Stop;
 import com.RJR.GlobeTrotter.entity.Trip;
 import com.RJR.GlobeTrotter.entity.User;
 import com.RJR.GlobeTrotter.exception.ResourceNotFoundException;
-<<<<<<< HEAD
-=======
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.util.Optional;
-
-import org.junit.jupiter.api.Test;
-
->>>>>>> 7c5ebc2d69ca10790429b917c02ef1f6cbf77eb8
-=======
->>>>>>> e9080cdf5de3cc86242a07b3f4737bbde0690d1b
->>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
 import com.RJR.GlobeTrotter.repository.CityRepository;
 import com.RJR.GlobeTrotter.repository.StopActivityRepository;
 import com.RJR.GlobeTrotter.repository.StopRepository;
 import com.RJR.GlobeTrotter.repository.TripRepository;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-import com.RJR.GlobeTrotter.exception.ResourceNotFoundException;
-
-class StopServiceTest {
-
-    @Test
-    void rejectsStopCreationForMissingTrip() {
-        TripRepository trips = mock(TripRepository.class);
-        when(trips.findById(99L)).thenReturn(Optional.empty());
-        StopService service = new StopService(mock(StopRepository.class), trips, mock(CityRepository.class),
-                mock(StopActivityRepository.class));
-        com.RJR.GlobeTrotter.dto.request.StopRequest request =
-                com.RJR.GlobeTrotter.dto.request.StopRequest.builder().tripId(99L).cityId(1L).build();
-
-        assertThrows(ResourceNotFoundException.class, () -> service.createStop(1L, request));
-=======
->>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
 
 class StopServiceTest {
 
@@ -348,25 +301,5 @@ class StopServiceTest {
         assertThrows(ResourceNotFoundException.class, () -> stopService.deleteStop(1L, 20L));
 
         verify(stopRepository, never()).delete(any(Stop.class));
-<<<<<<< HEAD
-=======
-import com.RJR.GlobeTrotter.exception.ResourceNotFoundException;
-
-class StopServiceTest {
-
-    @Test
-    void rejectsStopCreationForMissingTrip() {
-        TripRepository trips = mock(TripRepository.class);
-        when(trips.findById(99L)).thenReturn(Optional.empty());
-        StopService service = new StopService(mock(StopRepository.class), trips, mock(CityRepository.class),
-                mock(StopActivityRepository.class));
-        com.RJR.GlobeTrotter.dto.request.StopRequest request =
-                com.RJR.GlobeTrotter.dto.request.StopRequest.builder().tripId(99L).cityId(1L).build();
-
-        assertThrows(ResourceNotFoundException.class, () -> service.createStop(1L, request));
->>>>>>> 7c5ebc2d69ca10790429b917c02ef1f6cbf77eb8
-=======
->>>>>>> e9080cdf5de3cc86242a07b3f4737bbde0690d1b
->>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
     }
 }

@@ -1,18 +1,5 @@
 package com.RJR.GlobeTrotter.service;
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
-
-=======
->>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -33,27 +20,11 @@ import com.RJR.GlobeTrotter.dto.response.ActivityResponse;
 import com.RJR.GlobeTrotter.entity.Activity;
 import com.RJR.GlobeTrotter.entity.City;
 import com.RJR.GlobeTrotter.exception.ResourceNotFoundException;
-<<<<<<< HEAD
-=======
->>>>>>> e9080cdf5de3cc86242a07b3f4737bbde0690d1b
->>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
 import com.RJR.GlobeTrotter.repository.ActivityRepository;
 import com.RJR.GlobeTrotter.repository.CityRepository;
 
 class ActivityServiceTest {
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-    @Test
-    void searchWithoutFiltersReturnsAllActivities() {
-        ActivityRepository activities = mock(ActivityRepository.class);
-        when(activities.findAll()).thenReturn(List.of());
-        ActivityService service = new ActivityService(activities, mock(CityRepository.class));
-
-        assertTrue(service.searchActivities(null, null).isEmpty());
-=======
->>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
     private final ActivityRepository activityRepository = mock(ActivityRepository.class);
     private final CityRepository cityRepository = mock(CityRepository.class);
 
@@ -240,9 +211,5 @@ class ActivityServiceTest {
         assertThrows(ResourceNotFoundException.class, () -> activityService.deleteActivity(10L));
 
         verify(activityRepository, never()).deleteById(any());
-<<<<<<< HEAD
-=======
->>>>>>> e9080cdf5de3cc86242a07b3f4737bbde0690d1b
->>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
     }
 }
