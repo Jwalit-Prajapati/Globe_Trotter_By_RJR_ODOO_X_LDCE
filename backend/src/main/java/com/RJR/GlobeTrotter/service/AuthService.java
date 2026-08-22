@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.RJR.GlobeTrotter.dto.response.AuthResponse;
+import com.RJR.GlobeTrotter.dto.response.UserResponse;
 import com.RJR.GlobeTrotter.dto.request.LoginRequest;
 import com.RJR.GlobeTrotter.dto.request.RegisterRequest;
 import com.RJR.GlobeTrotter.entity.User;
@@ -43,9 +44,8 @@ public class AuthService {
 
         return AuthResponse.builder()
                 .token(token)
-                .userId(user.getId())
-                .name(user.getName())
-                .email(user.getEmail())
+                .tokenType("Bearer")
+                .user(toUserResponse(user))
                 .build();
     }
 
@@ -64,9 +64,17 @@ public class AuthService {
 
         return AuthResponse.builder()
                 .token(token)
-                .userId(user.getId())
+                .tokenType("Bearer")
+                .user(toUserResponse(user))
+                .build();
+    }
+
+    private UserResponse toUserResponse(User user) {
+        return UserResponse.builder()
+                .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
+                .createdAt(user.getCreatedAt())
                 .build();
     }
 }
