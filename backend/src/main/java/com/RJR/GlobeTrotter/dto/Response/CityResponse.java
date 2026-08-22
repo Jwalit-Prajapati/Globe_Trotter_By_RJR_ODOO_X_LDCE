@@ -1,4 +1,4 @@
-package com.RJR.GlobeTrotter.dto.response;
+package com.RJR.GlobeTrotter.dto.Response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,4 +21,3 @@ public class CityResponse {
     private Integer popularity;
     private String imageUrl;
 }
-git status
