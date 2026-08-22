@@ -12,10 +12,10 @@ const MOCK_TRIPS = [
 ];
 
 const MOCK_CITIES = [
-  { id: 1, name: 'Paris', country: 'France' },
-  { id: 2, name: 'Tokyo', country: 'Japan' },
-  { id: 3, name: 'New York', country: 'USA' },
-  { id: 4, name: 'Rome', country: 'Italy' }
+  { id: 1, name: 'Mumbai', country: 'India', image: '/images/cities/mumbai.jpeg' },
+  { id: 2, name: 'Goa', country: 'India', image: '/images/cities/goa.jpeg' },
+  { id: 3, name: 'Agra', country: 'India', image: '/images/cities/agra.jpeg' },
+  { id: 4, name: 'Kerala', country: 'India', image: '/images/cities/kerla.jpeg' }
 ];
 
 export const Dashboard = () => {
@@ -98,7 +98,7 @@ export const Dashboard = () => {
           {popularCities.map((city, idx) => (
             <div key={city.id} className={`relative rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow cursor-pointer group h-64 animate-slide-up delay-${(idx % 4) * 75 + 400}`}>
               <img 
-                src={`https://images.unsplash.com/photo-${1506012787146 + idx * 1000}?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80`} 
+                src={city.image || `https://images.unsplash.com/photo-${1506012787146 + idx * 1000}?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80`} 
                 alt={city.name}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />
