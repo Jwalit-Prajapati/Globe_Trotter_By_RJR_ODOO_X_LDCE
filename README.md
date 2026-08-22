@@ -1,1 +1,2 @@
-# Globe_Trotter_By_RJR_ODOO_X_LDCE
+# Globe_Trotter_By_RJR_ODOO_X_LDCE 
+# TECH STACK SPRINGBOOT REACTJS
