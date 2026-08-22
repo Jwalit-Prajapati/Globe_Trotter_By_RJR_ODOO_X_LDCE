@@ -1,4 +1,4 @@
-package com.RJR.GlobeTrotter.dto.response;
+package com.RJR.GlobeTrotter.dto.Response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +14,6 @@ import lombok.Setter;
 public class AuthResponse {
 
     private String token;
-    private Long userId;
-    private String name;
-    private String email;
+    private String tokenType;
+    private UserResponse user;
 }
