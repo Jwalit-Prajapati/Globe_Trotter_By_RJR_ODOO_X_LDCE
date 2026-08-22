@@ -1,0 +1,6 @@
+# Environment variables (contain secrets — never commit)
+.env
+.env.*
+!.env.example
+!frontend/.env.example
+!backend/.env.example
