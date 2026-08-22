@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { signup } from '../api/auth';
 import { Input } from '../components/ui/Input';
@@ -11,9 +11,11 @@ export const Signup = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  
+
   const { handleLogin } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { from, ...returnState } = location.state || {};
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -22,7 +24,11 @@ export const Signup = () => {
     try {
       const data = await signup({ name, email, password });
       handleLogin(data.user);
-      navigate('/dashboard');
+      if (from) {
+        navigate(`${from.pathname}${from.search || ''}`, { replace: true, state: returnState });
+      } else {
+        navigate('/dashboard', { replace: true });
+      }
     } catch (err) {
       setError(err.message || 'Signup failed');
     } finally {
@@ -69,7 +75,7 @@ export const Signup = () => {
             </Button>
           </form>
           <p className="text-center mt-8 text-muted text-sm">
-            Already have an account? <Link to="/login" className="text-accent font-semibold ml-1">Log in</Link>
+            Already have an account? <Link to="/login" state={location.state} className="text-accent font-semibold ml-1">Log in</Link>
           </p>
         </div>
       </div>

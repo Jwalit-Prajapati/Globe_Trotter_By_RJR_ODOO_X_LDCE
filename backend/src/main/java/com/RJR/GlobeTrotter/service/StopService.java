@@ -66,6 +66,14 @@ public class StopService {
     public List<StopResponse> getStopsForTrip(Long userId, Long tripId) {
         getOwnedTrip(userId, tripId);
 
+        return listStopsForTrip(tripId);
+    }
+
+    /**
+     * Returns stops for a trip without an ownership check. Callers (e.g. TripService) must
+     * have already verified the caller is allowed to see this trip.
+     */
+    List<StopResponse> listStopsForTrip(Long tripId) {
         return stopRepository.findByTripIdOrderByOrderIndexAsc(tripId).stream()
                 .map(this::toStopResponse)
                 .toList();

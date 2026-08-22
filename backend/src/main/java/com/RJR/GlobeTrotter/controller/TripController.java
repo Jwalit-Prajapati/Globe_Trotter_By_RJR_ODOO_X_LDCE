@@ -78,4 +78,10 @@ public class TripController {
         Long userId = currentUserProvider.getUserId(authentication);
         return ResponseEntity.ok(tripService.shareTrip(userId, tripId));
     }
+
+    @PostMapping("/copy/{publicSlug}")
+    public ResponseEntity<TripResponse> copyPublicTrip(Authentication authentication, @PathVariable String publicSlug) {
+        Long userId = currentUserProvider.getUserId(authentication);
+        return ResponseEntity.ok(tripService.copyPublicTrip(userId, publicSlug));
+    }
 }

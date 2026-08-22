@@ -31,7 +31,15 @@ public class BudgetService {
     public BudgetResponse getTripBudget(Long userId, Long tripId) {
         Trip trip = getOwnedTrip(userId, tripId);
 
-        List<Stop> stops = stopRepository.findByTripId(tripId);
+        return computeBudget(trip);
+    }
+
+    /**
+     * Computes the budget for a trip without an ownership check. Callers (e.g. TripService)
+     * must have already verified the caller is allowed to see this trip.
+     */
+    BudgetResponse computeBudget(Trip trip) {
+        List<Stop> stops = stopRepository.findByTripId(trip.getId());
         List<Long> stopIds = stops.stream().map(Stop::getId).toList();
 
         BigDecimal transportCost = sum(stops, Stop::getTransportCost);

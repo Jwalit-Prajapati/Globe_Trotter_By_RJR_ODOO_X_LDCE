@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { login } from '../api/auth';
-import { setAuthToken } from '../api/client';
 import { Input } from '../components/ui/Input';
 import { Button } from '../components/ui/Button';
 
@@ -11,26 +10,24 @@ export const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  
+
   const { handleLogin } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { from, ...returnState } = location.state || {};
 
   const onSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
     try {
-      // Hardcoded test user bypass
-      if (email === 'test@test.com' && password === 'password') {
-        setAuthToken('fake-jwt-token-for-testing');
-        handleLogin({ id: 1, name: 'Test User', email: 'test@test.com' });
-        navigate('/dashboard');
-        return;
-      }
-
       const data = await login({ email, password });
       handleLogin(data.user);
-      navigate('/dashboard');
+      if (from) {
+        navigate(`${from.pathname}${from.search || ''}`, { replace: true, state: returnState });
+      } else {
+        navigate('/dashboard', { replace: true });
+      }
     } catch (err) {
       setError(err.message || 'Login failed');
     } finally {
@@ -68,7 +65,7 @@ export const Login = () => {
             </Button>
           </form>
           <p className="text-center mt-8 text-muted text-sm">
-            Don't have an account? <Link to="/signup" className="text-accent font-semibold ml-1">Sign up</Link>
+            Don't have an account? <Link to="/signup" state={location.state} className="text-accent font-semibold ml-1">Sign up</Link>
           </p>
         </div>
       </div>

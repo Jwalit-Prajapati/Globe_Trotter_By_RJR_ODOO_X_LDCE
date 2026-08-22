@@ -1,11 +1,11 @@
 import { createContext, useContext, useState } from 'react';
-import { getAuthToken, removeAuthToken } from '../api/client';
+import { getAuthToken, getStoredUser, removeAuthToken, removeStoredUser } from '../api/client';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [loading] = useState(false); // Can be true if doing async validation
+  const [user, setUser] = useState(() => getStoredUser());
+  const [loading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(() => !!getAuthToken());
 
   const handleLogin = (userData) => {
@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
 
   const handleLogout = () => {
     removeAuthToken();
+    removeStoredUser();
     setIsAuthenticated(false);
     setUser(null);
   };

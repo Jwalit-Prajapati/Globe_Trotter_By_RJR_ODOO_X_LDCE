@@ -1,10 +1,14 @@
 import { apiClient } from './client';
 
-export const searchCities = (query, country = '') => {
+// Note: /api/cities/** requires authentication (not in the backend's public endpoint list).
+export const searchCities = (name = '', country = '') => {
   const params = new URLSearchParams();
-  if (query) params.append('q', query);
+  if (name) params.append('name', name);
   if (country) params.append('country', country);
-  return apiClient(`/cities?${params.toString()}`);
+  const query = params.toString();
+  return apiClient(`/cities${query ? `?${query}` : ''}`);
 };
 
 export const getPopularCities = () => apiClient('/cities/popular');
+
+export const getCityById = (cityId) => apiClient(`/cities/${cityId}`);

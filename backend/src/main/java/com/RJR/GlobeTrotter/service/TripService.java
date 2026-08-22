@@ -10,9 +10,12 @@ import com.RJR.GlobeTrotter.dto.response.ShareResponse;
 import com.RJR.GlobeTrotter.dto.response.TripResponse;
 import com.RJR.GlobeTrotter.dto.response.TripSummaryResponse;
 import com.RJR.GlobeTrotter.dto.request.TripRequest;
+import com.RJR.GlobeTrotter.entity.Stop;
+import com.RJR.GlobeTrotter.entity.StopActivity;
 import com.RJR.GlobeTrotter.entity.Trip;
 import com.RJR.GlobeTrotter.entity.User;
 import com.RJR.GlobeTrotter.exception.ResourceNotFoundException;
+import com.RJR.GlobeTrotter.repository.StopActivityRepository;
 import com.RJR.GlobeTrotter.repository.StopRepository;
 import com.RJR.GlobeTrotter.repository.TripRepository;
 import com.RJR.GlobeTrotter.repository.UserRepository;
@@ -29,6 +32,9 @@ public class TripService {
     private final TripRepository tripRepository;
     private final UserRepository userRepository;
     private final StopRepository stopRepository;
+    private final StopActivityRepository stopActivityRepository;
+    private final StopService stopService;
+    private final BudgetService budgetService;
     private final SecureRandom secureRandom = new SecureRandom();
 
     @Transactional
@@ -114,6 +120,54 @@ public class TripService {
         return toTripResponse(trip);
     }
 
+    @Transactional
+    public TripResponse copyPublicTrip(Long userId, String publicSlug) {
+        Trip sourceTrip = tripRepository.findByPublicSlug(publicSlug)
+                .filter(Trip::getIsPublic)
+                .orElseThrow(() -> new ResourceNotFoundException("Trip", publicSlug));
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", userId));
+
+        Trip newTrip = Trip.builder()
+                .user(user)
+                .name("Copy of " + sourceTrip.getName())
+                .description(sourceTrip.getDescription())
+                .startDate(sourceTrip.getStartDate())
+                .endDate(sourceTrip.getEndDate())
+                .budgetLimit(sourceTrip.getBudgetLimit())
+                .isPublic(false)
+                .build();
+        newTrip = tripRepository.save(newTrip);
+
+        for (Stop sourceStop : stopRepository.findByTripIdOrderByOrderIndexAsc(sourceTrip.getId())) {
+            Stop newStop = Stop.builder()
+                    .trip(newTrip)
+                    .city(sourceStop.getCity())
+                    .startDate(sourceStop.getStartDate())
+                    .endDate(sourceStop.getEndDate())
+                    .orderIndex(sourceStop.getOrderIndex())
+                    .transportCost(sourceStop.getTransportCost())
+                    .stayCost(sourceStop.getStayCost())
+                    .mealCost(sourceStop.getMealCost())
+                    .build();
+            newStop = stopRepository.save(newStop);
+
+            for (StopActivity sourceActivity : stopActivityRepository.findByStopId(sourceStop.getId())) {
+                StopActivity newActivity = StopActivity.builder()
+                        .stop(newStop)
+                        .activity(sourceActivity.getActivity())
+                        .dayDate(sourceActivity.getDayDate())
+                        .scheduledTime(sourceActivity.getScheduledTime())
+                        .cost(sourceActivity.getCost())
+                        .build();
+                stopActivityRepository.save(newActivity);
+            }
+        }
+
+        return toTripResponse(newTrip);
+    }
+
     private Trip getOwnedTrip(Long userId, Long tripId) {
         Trip trip = tripRepository.findById(tripId)
                 .orElseThrow(() -> new ResourceNotFoundException("Trip", tripId));
@@ -153,6 +207,8 @@ public class TripService {
                 .isPublic(trip.getIsPublic())
                 .publicSlug(trip.getPublicSlug())
                 .createdAt(trip.getCreatedAt())
+                .stops(stopService.listStopsForTrip(trip.getId()))
+                .budget(budgetService.computeBudget(trip))
                 .build();
     }
 
