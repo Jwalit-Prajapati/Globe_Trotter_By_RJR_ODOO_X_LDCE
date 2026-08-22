@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { login } from '../api/auth';
+import { setAuthToken } from '../api/client';
 import { Input } from '../components/ui/Input';
 import { Button } from '../components/ui/Button';
 
 export const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('test@test.com');
+  const [password, setPassword] = useState('password');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   
@@ -19,6 +20,14 @@ export const Login = () => {
     setError('');
     setLoading(true);
     try {
+      // Hardcoded test user bypass
+      if (email === 'test@test.com' && password === 'password') {
+        setAuthToken('fake-jwt-token-for-testing');
+        handleLogin({ id: 1, name: 'Test User', email: 'test@test.com' });
+        navigate('/dashboard');
+        return;
+      }
+
       const data = await login({ email, password });
       handleLogin(data.user);
       navigate('/dashboard');
@@ -34,6 +43,9 @@ export const Login = () => {
       <div className="split-form-side">
         <div className="auth-form-container">
           <h2 className="auth-title">Welcome Back</h2>
+          <div className="bg-bg-secondary border border-border-color p-3 rounded-md mb-6 text-sm text-center text-muted">
+            Test Login: <b className="text-text-primary">test@test.com</b> / <b className="text-text-primary">password</b>
+          </div>
           {error && <div className="badge badge-danger mb-4 w-full text-center py-2">{error}</div>}
           <form onSubmit={onSubmit} className="flex flex-col gap-5">
             <Input 
