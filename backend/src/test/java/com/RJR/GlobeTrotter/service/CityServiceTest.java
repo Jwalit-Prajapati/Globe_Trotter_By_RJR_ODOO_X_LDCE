@@ -1,6 +1,18 @@
 package com.RJR.GlobeTrotter.service;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+=======
+>>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -19,6 +31,7 @@ import com.RJR.GlobeTrotter.dto.request.CityRequest;
 import com.RJR.GlobeTrotter.dto.response.CityResponse;
 import com.RJR.GlobeTrotter.entity.City;
 import com.RJR.GlobeTrotter.exception.ResourceNotFoundException;
+<<<<<<< HEAD
 =======
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -29,11 +42,34 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 >>>>>>> 7c5ebc2d69ca10790429b917c02ef1f6cbf77eb8
+=======
+>>>>>>> e9080cdf5de3cc86242a07b3f4737bbde0690d1b
+>>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
 import com.RJR.GlobeTrotter.repository.CityRepository;
 
 class CityServiceTest {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    @Test
+    void searchWithoutFiltersReturnsAllCities() {
+        CityRepository cities = mock(CityRepository.class);
+        when(cities.findAll()).thenReturn(List.of());
+        CityService service = new CityService(cities);
+
+        assertTrue(service.searchCities(null, null).isEmpty());
+    }
+
+    @Test
+    void popularCitiesReturnsEmptyResultWhenRepositoryHasNoCities() {
+        CityRepository cities = mock(CityRepository.class);
+        when(cities.findTop10ByOrderByPopularityDesc()).thenReturn(List.of());
+        CityService service = new CityService(cities);
+
+        assertTrue(service.getPopularCities().isEmpty());
+=======
+>>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
     private final CityRepository cityRepository = mock(CityRepository.class);
 
     private final CityService cityService = new CityService(cityRepository);
@@ -182,6 +218,7 @@ class CityServiceTest {
         assertThrows(ResourceNotFoundException.class, () -> cityService.deleteCity(1L));
 
         verify(cityRepository, never()).deleteById(any());
+<<<<<<< HEAD
 =======
     @Test
     void searchWithoutFiltersReturnsAllCities() {
@@ -200,5 +237,8 @@ class CityServiceTest {
 
         assertTrue(service.getPopularCities().isEmpty());
 >>>>>>> 7c5ebc2d69ca10790429b917c02ef1f6cbf77eb8
+=======
+>>>>>>> e9080cdf5de3cc86242a07b3f4737bbde0690d1b
+>>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
     }
 }

@@ -3,12 +3,21 @@ package com.RJR.GlobeTrotter.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 =======
 import static org.mockito.Mockito.mock;
 >>>>>>> 7c5ebc2d69ca10790429b917c02ef1f6cbf77eb8
+=======
+import static org.mockito.Mockito.mock;
+=======
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+>>>>>>> e9080cdf5de3cc86242a07b3f4737bbde0690d1b
+>>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -16,13 +25,22 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+import org.springframework.security.authentication.AuthenticationManager;
+=======
+>>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
 import org.mockito.ArgumentCaptor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+<<<<<<< HEAD
 =======
 import org.springframework.security.authentication.AuthenticationManager;
 >>>>>>> 7c5ebc2d69ca10790429b917c02ef1f6cbf77eb8
+=======
+>>>>>>> e9080cdf5de3cc86242a07b3f4737bbde0690d1b
+>>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.RJR.GlobeTrotter.dto.request.LoginRequest;
@@ -37,6 +55,27 @@ import com.RJR.GlobeTrotter.security.JwtService;
 class AuthServiceTest {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    @Test
+    void registerCreatesUserAndReturnsToken() {
+        UserRepository users = mock(UserRepository.class);
+        PasswordEncoder encoder = mock(PasswordEncoder.class);
+        JwtService jwt = mock(JwtService.class);
+        AuthenticationManager authentication = mock(AuthenticationManager.class);
+        AuthService service = new AuthService(users, encoder, jwt, authentication);
+        RegisterRequest request = new RegisterRequest("Alex", "alex@example.com", "password123");
+        User saved = User.builder().id(1L).name("Alex").email("alex@example.com")
+                .passwordHash("encoded").build();
+
+        when(users.existsByEmail(request.getEmail())).thenReturn(false);
+        when(encoder.encode(request.getPassword())).thenReturn("encoded");
+        when(users.save(org.mockito.ArgumentMatchers.any(User.class))).thenReturn(saved);
+        when(jwt.generateToken(1L, "alex@example.com")).thenReturn("token");
+
+        AuthResponse response = service.register(request);
+=======
+>>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
     private final UserRepository userRepository = mock(UserRepository.class);
     private final PasswordEncoder passwordEncoder = mock(PasswordEncoder.class);
     private final JwtService jwtService = mock(JwtService.class);
@@ -90,6 +129,7 @@ class AuthServiceTest {
         when(jwtService.generateToken(1L, "alex@example.com")).thenReturn("token");
 
         AuthResponse response = authService.login(request);
+<<<<<<< HEAD
 =======
     @Test
     void registerCreatesUserAndReturnsToken() {
@@ -109,10 +149,14 @@ class AuthServiceTest {
 
         AuthResponse response = service.register(request);
 >>>>>>> 7c5ebc2d69ca10790429b917c02ef1f6cbf77eb8
+=======
+>>>>>>> e9080cdf5de3cc86242a07b3f4737bbde0690d1b
+>>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
 
         assertEquals("token", response.getToken());
         assertEquals("Bearer", response.getTokenType());
         assertEquals("alex@example.com", response.getUser().getEmail());
+<<<<<<< HEAD
 <<<<<<< HEAD
         verify(authenticationManager).authenticate(
                 new UsernamePasswordAuthenticationToken("alex@example.com", "password123"));
@@ -133,6 +177,8 @@ class AuthServiceTest {
 
         assertThrows(InvalidCredentialsException.class, () -> authService.login(request));
 =======
+=======
+>>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
         verify(users).save(org.mockito.ArgumentMatchers.any(User.class));
     }
 
@@ -158,6 +204,29 @@ class AuthServiceTest {
         assertThrows(InvalidCredentialsException.class, () -> service.login(request));
 
         verify(authentication).authenticate(org.mockito.ArgumentMatchers.any());
+<<<<<<< HEAD
 >>>>>>> 7c5ebc2d69ca10790429b917c02ef1f6cbf77eb8
+=======
+=======
+        verify(authenticationManager).authenticate(
+                new UsernamePasswordAuthenticationToken("alex@example.com", "password123"));
+    }
+
+    @Test
+    void loginThrowsInvalidCredentialsOnBadCredentials() {
+        LoginRequest request = new LoginRequest("alex@example.com", "wrong-password");
+        when(authenticationManager.authenticate(any())).thenThrow(new BadCredentialsException("bad credentials"));
+
+        assertThrows(InvalidCredentialsException.class, () -> authService.login(request));
+    }
+
+    @Test
+    void loginThrowsInvalidCredentialsWhenUserMissingAfterAuthentication() {
+        LoginRequest request = new LoginRequest("missing@example.com", "password123");
+        when(userRepository.findByEmail("missing@example.com")).thenReturn(Optional.empty());
+
+        assertThrows(InvalidCredentialsException.class, () -> authService.login(request));
+>>>>>>> e9080cdf5de3cc86242a07b3f4737bbde0690d1b
+>>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
     }
 }

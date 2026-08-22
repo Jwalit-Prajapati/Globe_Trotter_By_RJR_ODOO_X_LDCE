@@ -7,8 +7,8 @@ import { Input } from '../components/ui/Input';
 import { Button } from '../components/ui/Button';
 
 export const Login = () => {
-  const [email, setEmail] = useState('test@test.com');
-  const [password, setPassword] = useState('password');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   
@@ -43,9 +43,6 @@ export const Login = () => {
       <div className="split-form-side">
         <div className="auth-form-container">
           <h2 className="auth-title">Welcome Back</h2>
-          <div className="bg-bg-secondary border border-border-color p-3 rounded-md mb-6 text-sm text-center text-muted">
-            Test Login: <b className="text-text-primary">test@test.com</b> / <b className="text-text-primary">password</b>
-          </div>
           {error && <div className="badge badge-danger mb-4 w-full text-center py-2">{error}</div>}
           <form onSubmit={onSubmit} className="flex flex-col gap-5">
             <Input 
@@ -75,7 +72,11 @@ export const Login = () => {
           </p>
         </div>
       </div>
-      <div className="split-image-side"></div>
+      <div className="split-image-side">
+        <div className="slideshow-bg" style={{backgroundImage: "url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')"}}></div>
+        <div className="slideshow-bg" style={{backgroundImage: "url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')"}}></div>
+        <div className="slideshow-bg" style={{backgroundImage: "url('https://images.unsplash.com/photo-1504280741562-fd0e12a7cea7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')"}}></div>
+      </div>
     </div>
   );
 };

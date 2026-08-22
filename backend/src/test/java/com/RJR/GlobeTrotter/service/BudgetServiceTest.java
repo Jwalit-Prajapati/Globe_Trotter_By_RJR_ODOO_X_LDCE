@@ -1,24 +1,56 @@
 package com.RJR.GlobeTrotter.service;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 =======
 >>>>>>> 7c5ebc2d69ca10790429b917c02ef1f6cbf77eb8
+=======
+=======
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+>>>>>>> e9080cdf5de3cc86242a07b3f4737bbde0690d1b
+>>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.math.BigDecimal;
 import java.util.List;
 =======
 >>>>>>> 7c5ebc2d69ca10790429b917c02ef1f6cbf77eb8
+=======
+=======
+import java.math.BigDecimal;
+import java.util.List;
+>>>>>>> e9080cdf5de3cc86242a07b3f4737bbde0690d1b
+>>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+import com.RJR.GlobeTrotter.repository.StopActivityRepository;
+import com.RJR.GlobeTrotter.repository.StopRepository;
+import com.RJR.GlobeTrotter.repository.TripRepository;
+import com.RJR.GlobeTrotter.exception.ResourceNotFoundException;
+
+class BudgetServiceTest {
+
+    @Test
+    void rejectsBudgetLookupForMissingTrip() {
+        TripRepository trips = mock(TripRepository.class);
+        when(trips.findById(99L)).thenReturn(Optional.empty());
+        BudgetService service = new BudgetService(trips, mock(StopRepository.class), mock(StopActivityRepository.class));
+
+        assertThrows(ResourceNotFoundException.class, () -> service.getTripBudget(1L, 99L));
+=======
+>>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
 import com.RJR.GlobeTrotter.dto.response.BudgetResponse;
 import com.RJR.GlobeTrotter.entity.Stop;
 import com.RJR.GlobeTrotter.entity.StopActivity;
@@ -95,6 +127,7 @@ class BudgetServiceTest {
         when(tripRepository.findById(10L)).thenReturn(Optional.of(trip));
 
         assertThrows(ResourceNotFoundException.class, () -> budgetService.getTripBudget(1L, 10L));
+<<<<<<< HEAD
 =======
 import com.RJR.GlobeTrotter.repository.StopActivityRepository;
 import com.RJR.GlobeTrotter.repository.StopRepository;
@@ -111,5 +144,8 @@ class BudgetServiceTest {
 
         assertThrows(ResourceNotFoundException.class, () -> service.getTripBudget(1L, 99L));
 >>>>>>> 7c5ebc2d69ca10790429b917c02ef1f6cbf77eb8
+=======
+>>>>>>> e9080cdf5de3cc86242a07b3f4737bbde0690d1b
+>>>>>>> 060f2bb8a5e05d5070723012c61cebafa95a2b94
     }
 }

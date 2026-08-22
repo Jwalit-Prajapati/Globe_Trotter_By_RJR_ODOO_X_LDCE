@@ -276,9 +276,46 @@ hr {
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulseSoft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
 .animate-fade-in {
   animation: fadeIn 0.4s ease forwards;
 }
+
+.animate-slide-up {
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+.animate-pulse-soft {
+  animation: pulseSoft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Stagger Delays */
+.delay-75 { animation-delay: 75ms; }
+.delay-150 { animation-delay: 150ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
 
 /* Layout Utilities */
 .grid { display: grid; }
@@ -405,11 +442,32 @@ hr {
   .split-image-side {
     display: block;
     flex: 1;
-    background-image: url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
-    background-size: cover;
-    background-position: center;
+    position: relative;
+    overflow: hidden;
   }
 }
+
+/* Split Image Slideshow */
+@keyframes slideShowKenBurns {
+  0% { opacity: 1; transform: scale(1); }
+  25% { opacity: 1; transform: scale(1.05); }
+  33% { opacity: 0; transform: scale(1.08); }
+  92% { opacity: 0; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.slideshow-bg {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  animation: slideShowKenBurns 5s infinite linear;
+}
+
+.slideshow-bg:nth-child(1) { animation-delay: 0s; }
+.slideshow-bg:nth-child(2) { animation-delay: 1.66s; }
+.slideshow-bg:nth-child(3) { animation-delay: 3.33s; }
 
 .auth-form-container {
   width: 100%;
