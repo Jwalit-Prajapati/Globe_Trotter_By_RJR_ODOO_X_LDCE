@@ -31,7 +31,80 @@
 .navbar-links {
   display: flex;
   align-items: center;
-  gap: var(--space-6);
+}
+
+/* Search Pill */
+.navbar-search {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.search-pill {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  border-radius: 40px;
+  padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
+  transition: box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.search-pill:hover {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.18);
+}
+
+.search-text {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: 0 1rem;
+}
+
+.search-divider {
+  width: 1px;
+  height: 24px;
+  background-color: var(--border-color);
+}
+
+.search-icon-btn {
+  background-color: var(--accent-primary);
+  color: white;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.5rem;
+}
+
+/* Profile Menu */
+.profile-menu {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  border-radius: 30px;
+  padding: 0.25rem 0.25rem 0.25rem 0.75rem;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease;
+  margin-left: var(--space-4);
+}
+
+.profile-menu:hover {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.18);
+}
+
+.avatar-circle {
+  background-color: var(--text-primary);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .nav-link {
